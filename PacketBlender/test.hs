@@ -7,4 +7,4 @@ import PacketBlender.Doodad
 main = do
     args <- getArgs
     f <- openOffline $ args !! 0
-    callfun f 
+    loop f (-1) callfun

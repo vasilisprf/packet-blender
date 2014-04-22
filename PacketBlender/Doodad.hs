@@ -3,17 +3,12 @@ module PacketBlender.Doodad( callfun ) where
 import Network.Pcap                                   
 import System.IO
 import Control.Monad
+import Foreign.Ptr
+import Data.Word
 
-callfun f = do
-    ( p , q ) <- next f
-    callfun2 f p q
-
-callfun2 f p q
-      | hdrWireLength p /= 0 = do
-          print $ hdrSeconds p  
-          print $ hdrCaptureLength p
-          print $ hdrWireLength p
-          print q 
-          callfun f
-      | otherwise = do
-          return ()
+callfun :: PktHdr -> Ptr Word8 -> IO ()
+callfun p q = do
+    print $ hdrSeconds p  
+    print $ hdrCaptureLength p
+    print $ hdrWireLength p
+    print q 
